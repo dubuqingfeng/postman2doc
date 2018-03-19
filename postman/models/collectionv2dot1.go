@@ -15,14 +15,13 @@ type ItemV2dot1 struct {
 	Name     string           `json:"name"`
 	Request  requestV2dot1    `json:"request"`
 	Response []responseV2dot1 `json:"response"`
+	// folder
+	Items []ItemV2dot1 `json:"item"`
 }
 
 type requestV2dot1 struct {
-	Method string `json:"method"`
-	RawHeaders []struct {
-		Key   string `json:"key"`
-		Value string `json:"value"`
-	} `json:"headers"`
+	Method     string         `json:"method"`
+	RawHeaders []KeyValuePair `json:"headers"`
 	RawBody struct {
 		Mode string `json:"mode"`
 		Raw  string `json:"raw"`
