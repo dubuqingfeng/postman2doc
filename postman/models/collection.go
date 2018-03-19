@@ -1,5 +1,7 @@
 package models
 
+import "html/template"
+
 // by https://github.com/aubm/postmanerator/blob/master/postman/collection.go
 
 type Collection struct {
@@ -15,7 +17,7 @@ type Request struct {
 	Method        string
 	URL           string
 	PayloadType   string
-	PayloadRaw    string
+	PayloadRaw    template.HTML
 	PayloadParams []KeyValuePair
 	PathVariables []KeyValuePair
 	Headers       []KeyValuePair
@@ -28,7 +30,7 @@ type Response struct {
 	Name       string
 	Status     string
 	StatusCode int
-	Body       string
+	Body       template.HTML
 	Headers    []KeyValuePair
 }
 

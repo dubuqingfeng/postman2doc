@@ -3,6 +3,8 @@ package parser
 import (
 	"encoding/json"
 	"github.com/dubuqingfeng/postman2doc/postman/models"
+	"html/template"
+	"fmt"
 )
 
 type CollectionV2dot1Parser struct {
@@ -57,7 +59,22 @@ func (this CollectionV2dot1Parser) buildRequest(item models.ItemV2dot1) (models.
 	request.Method = item.Request.Method
 	request.URL = item.Request.URL.Raw
 	request.Description = item.Request.Description
-	request.PayloadRaw = item.Request.RawBody.Raw
+	request.PayloadRaw = template.HTML(item.Request.RawBody.Raw)
+	request.Responses = this.buildResponse(item)
 	request.Headers = item.Request.RawHeaders
 	return request
+}
+
+func (this CollectionV2dot1Parser) buildResponse(item models.ItemV2dot1) ([]models.Response) {
+	requests := []models.Response{}
+	for i, item := range item.Response {
+		fmt.Print(i)
+		request := models.Response{}
+		request.Name = item.Name
+		request.Body = template.HTML(item.Body)
+		request.StatusCode = item.Code
+		requests = append(requests, request)
+	}
+
+	return requests
 }

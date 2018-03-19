@@ -1,22 +1,24 @@
 # {{.Name}}
-
 {{range .Requests}}
-
 ## {{.Name}}
-
-`{{.Method}} {{ .url }}`
-
+{{if .Description}}
+{{.Description}}
+{{end}}
+{{if .URL}}
+`{{.Method}} {{.URL}}`
+{{end}}
 ### 参数
-
-{{ .Param }}
-
+{{if .PayloadRaw}}
+{{.PayloadRaw}}
+{{else}}
+无
+{{end}}
+{{if .Responses}}
 ### 返回值
-
 ```
-
-{
-    "status": true
-}
-
+{{range .Responses}}
+{{.Body}}
+{{end}}
 ```
+{{end}}
 {{end}}
